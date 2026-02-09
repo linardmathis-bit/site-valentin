@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Pour toi ❤️</title>
+    <style>
+        body {
+            font-family: 'Cursive', Arial, sans-serif;
+            text-align: center;
+            background: #ffe6f0;
+            margin-top: 100px;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff3366;
+        }
+        #non {
+            position: absolute;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #oui {
+            background-color: #ff4d79;
+            color: white;
+            border: none;
+        }
+        #oui:hover {
+            transform: scale(1.2);
+            background-color: #ff6699;
+        }
+        #non {
+            background-color: #ccc;
+            border: none;
+        }
+
+        /* Animation des cœurs et drapeaux */
+        @keyframes fall {
+            0% { top: -50px; opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .falling {
+            position: absolute;
+            animation: fall 5s linear forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Veux-tu être ma Valentine ? ❤️</h1>
+
+    <button id="oui" onclick="felicitation()">Oui</button>
+    <button id="non" onmouseover="bouge()" onclick="bouge()">Non</button>
+
+    <!-- Optionnel : musique de fond -->
+    <!-- <audio src="musique.mp3" autoplay loop></audio> -->
+
+    <script>
+        // Bouton Non qui bouge
+        function bouge() {
+            const bouton = document.getElementById("non");
+            bouton.style.left = Math.random() * 80 + "%";
+            bouton.style.top = Math.random() * 80 + "%";
+        }
+
+        // Message final + photo animée
+        function felicitation() {
+            document.body.innerHTML = `
+                <h1>Félicitations mon amour ❤️🥰</h1>
+                <img id="photo" src="photo.jpg" style="margin-top:20px; width:300px; border-radius:20px; opacity:0; transform: scale(0.5); transition: all 1s ease;">
+            `;
+
+            // Animation fondu + zoom
+            const photo = document.getElementById("photo");
+            setTimeout(() => {
+                photo.style.opacity = 1;
+                photo.style.transform = "scale(1)";
+            }, 100);
+        }
+
+        // Pluie d'éléments (cœurs et drapeaux)
+        function createElement() {
+            const elements = ["❤️", "madagascar.png", "guadeloupe.png"];
+            const choice = elements[Math.floor(Math.random() * elements.length)];
+
+            const el = document.createElement("div");
+            el.className = "falling";
+
+            if (choice === "❤️") {
+                el.innerText = choice;
+                el.style.fontSize = Math.random() * 30 + 10 + "px";
+            } else {
+                const img = document.createElement("img");
+                img.src = choice;
+                img.style.width = Math.random() * 40 + 20 + "px";
+                el.appendChild(img);
+            }
+
+            el.style.left = Math.random() * window.innerWidth + "px";
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 5000);
+        }
+
+        // Générer un élément toutes les 300ms
+        setInterval(createElement, 300);
+    </script>
+
+</body>
+</html>
